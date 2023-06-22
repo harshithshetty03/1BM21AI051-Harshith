@@ -1,0 +1,101 @@
+#include<iostream>
+using namespace std;
+
+class search{
+
+    public:
+    int s[20];
+    int key;
+    
+int linear_s(int s[], int key, int n){ 
+    int i;
+    for (i = 0; i < n; i++){
+        if (s[i] == key){    
+            return i;
+        }
+    }
+    if (i == n){
+        cout << key << " isn't present in the array" << endl;
+    }
+    return i=-1;
+}
+
+int binary_s(int s[], int key,int n){
+    //sorting
+    int temp;
+    int length = sizeof(s)/sizeof(s[0]);  
+    for (int i = 0; i < length; i++) {     
+        for (int j = i+1; j < length; j++) {     
+            if(s[i] > s[j]) {    
+                temp = s[i];    
+                s[i] = s[j];    
+                s[j] = temp;   
+            }
+        }
+    }
+    //bin search
+    int low=0,high=n-1;
+    int loc=-1;
+    int mid;
+    while(low<=high){
+        mid=(low+high)/2;   
+        if(s[mid]==key){
+            return mid;
+        }
+        else if(s[mid]<key){
+            low=mid+1;
+        }
+        else{
+            high=mid-1;
+        }
+    }
+    return -1;
+}
+
+
+};
+
+int linear_s(int [],int,int);
+int binary_s(int [],int,int);
+
+int main(){
+    search t;
+    int ch,res,n;
+    cout << "Enter number of elements in array" << endl;
+    cin >> n;
+    cout << "enter array elements" << endl;
+    for (int i = 0; i < n; i++){
+        cin >> t.s[i];
+    }
+    cout << "Enter a number to search" << endl;
+    cin >> t.key;
+    while(1){
+    cout << "Enter 1 for linear search and 2 for binary search and 3 to exit" << endl;
+    cin >> ch;
+  
+    switch(ch){
+        case 1:
+            res = linear_s(t.s, t.key, n);
+            if(res == -1){
+                cout << "Element not found" << endl;
+            }
+            else{
+                cout << "Element found at position " << res+1 << endl;
+            }
+            break;
+        case 2:
+            res = binary_s(t.s, t.key, n);
+            if(res == -1){
+                cout << "Element not found" << endl;
+            }
+            else{
+                cout << "Element found at position " << res+1 << endl;
+            }
+            break;
+          case 3: exit(0);
+        default:
+            cout << "Invalid choice" << endl;
+    }
+    }
+    return 0;
+}
